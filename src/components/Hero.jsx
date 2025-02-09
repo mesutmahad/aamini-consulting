@@ -5,6 +5,7 @@ export default function Hero() {
     <div className="relative min-h-[calc(100vh-5rem)] flex items-center bg-[#2B428C] pt-20">
       <div className="container mx-auto px-4 py-12 md:py-16 lg:py-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Text Content - Stays on the Left */}
           <div className="space-y-6 text-center lg:text-left">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight">
               We specialize in helping individuals and organizations set up
@@ -31,30 +32,13 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Mobile Image */}
-          <div className="block sm:hidden text-center mt-8">
+          {/* Image - Moves to Top on Mobile & Right Side on Large Screens */}
+          <div className="flex justify-center order-first lg:order-last">
             <img
               src="/assets/chart vector.png"
               alt="Analytics Dashboard"
-              className="w-full max-w-xs mx-auto rounded-lg"
+              className="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl h-auto object-cover rounded-lg"
             />
-          </div>
-
-          {/* Desktop Image */}
-          <div className="hidden sm:block">
-            <div className="relative p-6">
-              <div className="grid grid-cols-2 gap-6">
-                <div className="col-span-2">
-                  <div>
-                    <img
-                      src="/assets/chart vector.png"
-                      alt="Analytics Dashboard"
-                      className="w-full h-auto object-cover rounded-lg mt-10"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
