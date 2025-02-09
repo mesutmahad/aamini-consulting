@@ -1,22 +1,20 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { Link, useLocation } from "react-router-dom"
-import { Button } from "../components/ui/button"
-import { Menu, X } from "lucide-react"
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Button } from "../components/ui/button";
+import { Menu, X } from "lucide-react";
 
 export default function Nav() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
-  const location = useLocation()
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <nav
@@ -29,8 +27,14 @@ export default function Nav() {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
-          <Link to="/src/App.jsx" className="text-white text-2xl font-bold">
-            Aamini-Cosulting
+          {/* Replace text with image logo */}
+          <Link to="/src/App.jsx" className="flex items-center">
+            <img
+              src="/assets/Amini Consultation Logo white-01.png"
+              alt="Company Logo"
+              className="h-20 w-auto"
+            />
+            
           </Link>
 
           <button
@@ -98,6 +102,5 @@ function NavLink({ to, active, children }) {
     >
       {children}
     </Link>
-  )
+  );
 }
-
