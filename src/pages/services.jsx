@@ -1,21 +1,36 @@
-import { User, Building2, Users, Activity, Clock, Shield } from "lucide-react"
-import Pricing from "./pricing"
+"use client";
+
+import { User, Building2, Users, Activity, Clock, Shield } from "lucide-react";
+import Pricing from "./pricing";
 import { useEffect } from "react";
+import { useTheme } from "../contexts/ThemeContext";
 
 export default function Services() {
-   useEffect(() => {
-     window.scrollTo(0, 0);
-   }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  const { isDark } = useTheme();
+
   return (
-    <div>
+    <div
+      className={isDark ? "bg-gray-900 text-white" : "bg-white text-gray-900"}
+    >
       <div className="min-h-screen mt-20">
         {/* Services Section */}
         <section className="py-16 md:py-24">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-center text-[#2B428C] mb-4">
+            <h2
+              className={`text-3xl md:text-4xl font-bold text-center ${
+                isDark ? "text-blue-400" : "text-[#2B428C]"
+              } mb-4`}
+            >
               Our Services
             </h2>
-            <p className="text-center text-gray-600 max-w-2xl mx-auto mb-12">
+            <p
+              className={`text-center ${
+                isDark ? "text-gray-300" : "text-gray-600"
+              } max-w-2xl mx-auto mb-12`}
+            >
               Lorem ipsum dolor sit amet consectetur. Dictum auctor urna feugiat
               morbi. Blandit egestas ipsum vehicula fusce sit. A fusce pulvinar
               morbi
@@ -23,38 +38,70 @@ export default function Services() {
 
             <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
               <ServiceCard
-                icon={<User className="w-12 h-12 text-[#47C263]" />}
+                icon={
+                  <User
+                    className={`w-12 h-12 ${
+                      isDark ? "text-green-400" : "text-[#47C263]"
+                    }`}
+                  />
+                }
                 title="Personal Consultant"
                 description="Lorem ipsum dolor sit amet consectetur. Mauris tellus aliquet curabitur dignissim urna. Nibh ultrices sed semper non ipsum aliquam vulputate sapien."
+                isDark={isDark}
               />
               <ServiceCard
-                icon={<Building2 className="w-12 h-12 text-[#2B428C]" />}
+                icon={
+                  <Building2
+                    className={`w-12 h-12 ${
+                      isDark ? "text-blue-400" : "text-[#2B428C]"
+                    }`}
+                  />
+                }
                 title="Company consultant"
                 description="Lorem ipsum dolor sit amet consectetur. Mauris tellus aliquet curabitur dignissim urna. Nibh ultrices sed semper non ipsum aliquam vulputate sapien."
+                isDark={isDark}
               />
               <ServiceCard
-                icon={<Users className="w-12 h-12 text-[#2B428C]" />}
+                icon={
+                  <Users
+                    className={`w-12 h-12 ${
+                      isDark ? "text-blue-400" : "text-[#2B428C]"
+                    }`}
+                  />
+                }
                 title="Family Consultant"
                 description="Lorem ipsum dolor sit amet consectetur. Mauris tellus aliquet curabitur dignissim urna. Nibh ultrices sed semper non ipsum aliquam vulputate sapien."
+                isDark={isDark}
               />
               <ServiceCard
-                icon={<Activity className="w-12 h-12 text-[#2B428C]" />}
+                icon={
+                  <Activity
+                    className={`w-12 h-12 ${
+                      isDark ? "text-blue-400" : "text-[#2B428C]"
+                    }`}
+                  />
+                }
                 title="Health Consultant"
                 description="Lorem ipsum dolor sit amet consectetur. Mauris tellus aliquet curabitur dignissim urna. Nibh ultrices sed semper non ipsum aliquam vulputate sapien."
+                isDark={isDark}
               />
             </div>
           </div>
         </section>
 
         {/* Trust Section */}
-        <section className="py-16 ">
+        <section className="py-16">
           <div className="container mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
-                <h2 className="text-3xl md:text-4xl font-bold text-[#2B428C]">
+                <h2
+                  className={`text-3xl md:text-4xl font-bold ${
+                    isDark ? "text-blue-400" : "text-[#2B428C]"
+                  }`}
+                >
                   Lorem ipsum dolor sit amet consectetur. Porttitor in vitae
                 </h2>
-                <p className="text-gray-600">
+                <p className={isDark ? "text-gray-300" : "text-gray-600"}>
                   Lorem ipsum dolor sit amet consectetur.
                   <br />
                   Diam lacus porttitor eget nec. Eget nulla tortor diam
@@ -64,21 +111,49 @@ export default function Services() {
                 </p>
 
                 <div className="space-y-4">
-                  <div className="flex items-center gap-4 p-4 bg-white text-black rounded-lg shadow-sm">
-                    <Clock className="w-10 h-10 text-blue-800 " />
+                  <div
+                    className={`flex items-center gap-4 p-4 ${
+                      isDark ? "bg-gray-800" : "bg-white"
+                    } ${
+                      isDark ? "text-white" : "text-black"
+                    } rounded-lg shadow-sm`}
+                  >
+                    <Clock
+                      className={`w-10 h-10 ${
+                        isDark ? "text-blue-400" : "text-blue-800"
+                      }`}
+                    />
                     <div>
                       <h3 className="font-semibold">Trusted and Reliable</h3>
-                      <p className="text-sm text-black">
+                      <p
+                        className={`text-sm ${
+                          isDark ? "text-gray-300" : "text-black"
+                        }`}
+                      >
                         Lorem ipsum dolor sit amet consectetur.
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-4 p-4  bg-white text-black rounded-lg shadow-sm">
-                    <Shield className="w-10 h-10 text-blue-800" />
+                  <div
+                    className={`flex items-center gap-4 p-4 ${
+                      isDark ? "bg-gray-800" : "bg-white"
+                    } ${
+                      isDark ? "text-white" : "text-black"
+                    } rounded-lg shadow-sm`}
+                  >
+                    <Shield
+                      className={`w-10 h-10 ${
+                        isDark ? "text-blue-400" : "text-blue-800"
+                      }`}
+                    />
                     <div>
                       <h3 className="font-semibold">Trusted and Reliable</h3>
-                      <p className="text-sm text-black">
+                      <p
+                        className={`text-sm ${
+                          isDark ? "text-gray-300" : "text-black"
+                        }`}
+                      >
                         Lorem ipsum dolor sit amet consectetur.
                       </p>
                     </div>
@@ -98,12 +173,20 @@ export default function Services() {
         </section>
 
         {/* Testimonials Section */}
-        <section className="py-16 bg-white">
+        <section className={`py-16 ${isDark ? "bg-gray-800" : "bg-white"}`}>
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#2B428C] mb-4 flex flex-col items-center">
+            <h2
+              className={`text-3xl md:text-4xl font-bold ${
+                isDark ? "text-blue-400" : "text-[#2B428C]"
+              } mb-4 flex flex-col items-center`}
+            >
               What Our Customers Say?
             </h2>
-            <p className="text-gray-600 mb-12 flex flex-col items-center">
+            <p
+              className={`${
+                isDark ? "text-gray-300" : "text-gray-600"
+              } mb-12 flex flex-col items-center`}
+            >
               Take a look at the feedback from satisfied customers
             </p>
 
@@ -113,19 +196,27 @@ export default function Services() {
                 role="C.e.o at Tera tech"
                 rating={5}
                 testimonial="Lorem ipsum dolor sit amet consectetur. Commodo ut venenatis quam tristique nulla sed enim. Tempor semper malesuada arcu cursus. Venenatis vulputate diam elit tellus faucibus senectus Faucibus consectetur tortor."
-                profilePicture="/assets/Rectangle 10.jpg" // Add profile picture URL here
+                profilePicture="/assets/Rectangle 10.jpg"
+                isDark={isDark}
               />
               <TestimonialCard
                 name="Dr. Husni Alli"
                 role="Manager at netcare"
                 rating={5}
                 testimonial="Lorem ipsum dolor sit amet consectetur. Commodo ut venenatis quam tristique nulla sed enim. Tempor semper malesuada arcu cursus. Venenatis vulputate diam elit tellus faucibus senectus Faucibus consectetur tortor."
-                profilePicture="/assets/Rectangle 17.jpg" // Add profile picture URL here
+                profilePicture="/assets/Rectangle 17.jpg"
+                isDark={isDark}
               />
             </div>
 
             <div className="flex justify-center gap-4 mt-8">
-              <button className="p-2 rounded-full bg-gray-200 hover:bg-gray-300">
+              <button
+                className={`p-2 rounded-full ${
+                  isDark
+                    ? "bg-gray-700 hover:bg-gray-600"
+                    : "bg-gray-200 hover:bg-gray-300"
+                }`}
+              >
                 <svg
                   className="w-6 h-6"
                   fill="none"
@@ -140,7 +231,13 @@ export default function Services() {
                   />
                 </svg>
               </button>
-              <button className="p-2 rounded-full bg-[#47C263] text-white hover:bg-[#47C263]/90">
+              <button
+                className={`p-2 rounded-full ${
+                  isDark
+                    ? "bg-green-600 text-white hover:bg-green-700"
+                    : "bg-[#47C263] text-white hover:bg-[#47C263]/90"
+                }`}
+              >
                 <svg
                   className="w-6 h-6"
                   fill="none"
@@ -164,14 +261,20 @@ export default function Services() {
   );
 }
 
-function ServiceCard({ icon, title, description }) {
+function ServiceCard({ icon, title, description, isDark }) {
   return (
-    <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+    <div
+      className={`${
+        isDark ? "bg-gray-800" : "bg-white"
+      } p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow`}
+    >
       <div className="mb-4">{icon}</div>
       <h3 className="text-xl font-semibold mb-2">{title}</h3>
-      <p className="text-gray-600">{description}</p>
+      <p className={isDark ? "text-gray-300" : "text-gray-600"}>
+        {description}
+      </p>
     </div>
-  )
+  );
 }
 
 const TestimonialCard = ({
@@ -180,18 +283,32 @@ const TestimonialCard = ({
   rating,
   testimonial,
   profilePicture,
+  isDark,
 }) => {
   return (
-    <div className="flex flex-col items-center p-6 bg-gray-50 rounded-lg shadow-md">
+    <div
+      className={`flex flex-col items-center p-6 ${
+        isDark ? "bg-gray-700" : "bg-gray-50"
+      } rounded-lg shadow-md`}
+    >
       <img
-        src={profilePicture}
+        src={profilePicture || "/placeholder.svg"}
         alt={`${name}'s profile`}
         className="w-24 h-24 rounded-full object-cover mb-4"
       />
-      <h3 className="text-xl font-semibold text-[#2B428C]">{name}</h3>
-      <p className="text-sm text-gray-500 mb-2">{role}</p>
+      <h3
+        className={`text-xl font-semibold ${
+          isDark ? "text-blue-400" : "text-[#2B428C]"
+        }`}
+      >
+        {name}
+      </h3>
+      <p
+        className={`text-sm ${isDark ? "text-gray-400" : "text-gray-500"} mb-2`}
+      >
+        {role}
+      </p>
       <div className="flex mb-4">
-        {/* Display rating stars */}
         {[...Array(rating)].map((_, i) => (
           <svg
             key={i}
@@ -203,9 +320,13 @@ const TestimonialCard = ({
           </svg>
         ))}
       </div>
-      <p className="text-gray-600 text-center">{testimonial}</p>
+      <p
+        className={
+          isDark ? "text-gray-300 text-center" : "text-gray-600 text-center"
+        }
+      >
+        {testimonial}
+      </p>
     </div>
   );
 };
-
-

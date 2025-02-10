@@ -1,20 +1,33 @@
+"use client";
+
 import { Check } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { useEffect } from "react";
+import { useTheme } from "../contexts/ThemeContext";
 
 export default function Pricing() {
-   useEffect(() => {
-        window.scrollTo(0, 0);
-      }, [])
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  const { isDark } = useTheme();
+
   return (
-    <div className="min-h-screen bg-[#f9f9f9] py-16 mt-20">
+    <div
+      className={`min-h-screen ${
+        isDark ? "bg-gray-900" : "bg-[#f9f9ff]"
+      } py-16 mt-20`}
+    >
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h1 className="text-3xl md:text-4xl font-bold text-[#2B428C] mb-4">
+          <h1
+            className={`text-3xl md:text-4xl font-bold ${
+              isDark ? "text-blue-400" : "text-[#2B428C]"
+            } mb-4`}
+          >
             Pricing Package
           </h1>
-          <p className="text-gray-600">
+          <p className={isDark ? "text-gray-300" : "text-gray-600"}>
             Lorem ipsum dolor sit amet consectetur. Commodo ut venenatis quam
             tristique nulla sed enim. Tempor semper malesuada arcu cursus.
             Venenatis vulputate diam
@@ -22,83 +35,51 @@ export default function Pricing() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-24">
-          {/* Basic Plan */}
-          <div className="bg-white rounded-lg p-6 shadow-sm">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 bg-[#2B428C]/10 rounded-lg flex items-center justify-center">
-                <div className="w-6 h-6 bg-[#2B428C] rounded-full" />
-              </div>
-              <div>
-                <div className="text-sm text-gray-600">For individuals</div>
-                <h3 className="font-semibold text-xl">Basic</h3>
-              </div>
-            </div>
-            <div className="text-4xl font-bold mb-6">$1,500</div>
-            <div className="mb-6">
-              <div className="font-medium mb-4">What's included</div>
-              <ul className="space-y-3">
-                <PricingFeature text="All analytics features" />
-                <PricingFeature text="Up to 250,000 tracked visits" />
-                <PricingFeature text="Normal support" />
-                <PricingFeature text="Up to 3 team members" />
-              </ul>
-            </div>
-            <Button className="w-full bg-[#2B428C]">Get started</Button>
-          </div>
-
-          {/* Pro Plan */}
-          <div className="bg-[#2B428C] text-white rounded-lg p-6 shadow-lg transform scale-105">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center">
-                <div className="w-6 h-6 bg-white rounded-full" />
-              </div>
-              <div>
-                <div className="text-sm text-white/80">Full package</div>
-                <h3 className="font-semibold text-xl">Pro</h3>
-              </div>
-            </div>
-            <div className="text-4xl font-bold mb-6">$5,000</div>
-            <div className="mb-6">
-              <div className="font-medium mb-4">What's included</div>
-              <ul className="space-y-3">
-                <PricingFeature text="All analytics features" light />
-                <PricingFeature text="Up to 1,000,000 tracked visits" light />
-                <PricingFeature text="Premium support" light />
-                <PricingFeature text="Up to 10 team members" light />
-              </ul>
-            </div>
-            <Button className="w-full bg-[#47C263] hover:bg-[#47C263]/90">
-              Get started
-            </Button>
-          </div>
-
-          {/* Enterprise Plan */}
-          <div className="bg-white rounded-lg p-6 shadow-sm">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 bg-[#2B428C]/10 rounded-lg flex items-center justify-center">
-                <div className="w-6 h-6 bg-[#2B428C] rounded-full" />
-              </div>
-              <div>
-                <div className="text-sm text-gray-600">For big companies</div>
-                <h3 className="font-semibold text-xl">Enterprise</h3>
-              </div>
-            </div>
-            <div className="text-4xl font-bold mb-6">$3,000</div>
-            <div className="mb-6">
-              <div className="font-medium mb-4">What's included</div>
-              <ul className="space-y-3">
-                <PricingFeature text="All analytics features" />
-                <PricingFeature text="Up to 5,000,000 tracked visits" />
-                <PricingFeature text="Dedicated support" />
-                <PricingFeature text="Up to 50 team members" />
-              </ul>
-            </div>
-            <Button className="w-full bg-[#2B428C]">Get started</Button>
-          </div>
+          <PricingCard
+            title="Basic"
+            price="$1,500"
+            description="For individuals"
+            features={[
+              "All analytics features",
+              "Up to 250,000 tracked visits",
+              "Normal support",
+              "Up to 3 team members",
+            ]}
+            isDark={isDark}
+          />
+          <PricingCard
+            title="Pro"
+            price="$5,000"
+            description="Full package"
+            features={[
+              "All analytics features",
+              "Up to 1,000,000 tracked visits",
+              "Premium support",
+              "Up to 10 team members",
+            ]}
+            isPro={true}
+            isDark={isDark}
+          />
+          <PricingCard
+            title="Enterprise"
+            price="$3,000"
+            description="For big companies"
+            features={[
+              "All analytics features",
+              "Up to 5,000,000 tracked visits",
+              "Dedicated support",
+              "Up to 50 team members",
+            ]}
+            isDark={isDark}
+          />
         </div>
 
         {/* Subscribe Section */}
-        <div className="bg-[#2B428C] rounded-lg p-8 md:p-12">
+        <div
+          className={`${
+            isDark ? "bg-gray-800" : "bg-[#2B428C]"
+          } rounded-lg p-8 md:p-12`}
+        >
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="flex-shrink-0">
               <img
@@ -123,7 +104,13 @@ export default function Pricing() {
                   placeholder="Your Email"
                   className="bg-white/10 border-white/20 text-white placeholder:text-white/60"
                 />
-                <Button className="bg-[#47C263] hover:bg-[#47C263]/90 text-white">
+                <Button
+                  className={`${
+                    isDark
+                      ? "bg-green-600 hover:bg-green-700"
+                      : "bg-[#47C263] hover:bg-[#47C263]/90"
+                  } text-white`}
+                >
                   Subscribe
                 </Button>
               </div>
@@ -131,6 +118,83 @@ export default function Pricing() {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+function PricingCard({
+  title,
+  price,
+  description,
+  features,
+  isPro = false,
+  isDark,
+}) {
+  return (
+    <div
+      className={`${
+        isPro
+          ? isDark
+            ? "bg-blue-900 text-white"
+            : "bg-[#2B428C] text-white"
+          : isDark
+          ? "bg-gray-800 text-white"
+          : "bg-white text-gray-900"
+      } rounded-lg p-6 shadow-lg ${isPro ? "transform scale-105" : ""}`}
+    >
+      <div className="flex items-center gap-4 mb-4">
+        <div
+          className={`w-12 h-12 ${
+            isPro
+              ? "bg-white/10"
+              : isDark
+              ? "bg-blue-900/10"
+              : "bg-[#2B428C]/10"
+          } rounded-lg flex items-center justify-center`}
+        >
+          <div
+            className={`w-6 h-6 ${
+              isPro ? "bg-white" : isDark ? "bg-blue-400" : "bg-[#2B428C]"
+            } rounded-full`}
+          />
+        </div>
+        <div>
+          <div
+            className={`text-sm ${
+              isPro
+                ? "text-white/80"
+                : isDark
+                ? "text-gray-400"
+                : "text-gray-600"
+            }`}
+          >
+            {description}
+          </div>
+          <h3 className="font-semibold text-xl">{title}</h3>
+        </div>
+      </div>
+      <div className="text-4xl font-bold mb-6">{price}</div>
+      <div className="mb-6">
+        <div className="font-medium mb-4">What's included</div>
+        <ul className="space-y-3">
+          {features.map((feature, index) => (
+            <PricingFeature key={index} text={feature} light={isPro} />
+          ))}
+        </ul>
+      </div>
+      <Button
+        className={`w-full ${
+          isPro
+            ? isDark
+              ? "bg-green-600 hover:bg-green-700"
+              : "bg-[#47C263] hover:bg-[#47C263]/90"
+            : isDark
+            ? "bg-blue-600 hover:bg-blue-700"
+            : "bg-[#2B428C] hover:bg-[#2B428C]/90"
+        } text-white`}
+      >
+        Get started
+      </Button>
     </div>
   );
 }

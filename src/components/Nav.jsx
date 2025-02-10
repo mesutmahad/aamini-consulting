@@ -1,12 +1,16 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "../components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { useTheme } from "../contexts/ThemeContext";
 
 export default function Nav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const { isDark, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,89 +20,101 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const getNavBackground = () => {
+    return isDark ? "bg-gray-900" : "bg-[#2B428C]";
+  };
+
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-[#2B428C]/95 backdrop-blur-sm shadow-lg"
-          : "bg-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${getNavBackground()} ${
+        isScrolled ? "backdrop-blur-sm shadow-lg" : ""
       }`}
-      style={{ backgroundColor: "#2B428C" }}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
-          {/* Replace text with image logo */}
-          <Link to="/src/App.jsx" className="flex items-center">
-            <img
-              src="/assets/Amini Consultation Logo white-01.png"
-              alt="Company Logo"
-              className="h-20 w-auto"
-            />
-            
-          </Link>
+      <div className="container mx-auto px-4 relative flex items-center justify-between h-20">
+        {/* Logo */}
+        <Link to="/src/App.jsx" className="flex items-center">
+          <img
+            src={
+              isDark
+                ? "/assets/Amini Consultation Logo white-01.png"
+                : "/assets/Amini Consultation Logo-02.png"
+            }
+            alt="Company Logo"
+            className="h-20 w-auto" // Decreased size
+          />
+        </Link>
 
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden text-white focus:outline-none"
+        {/* Navigation Links (Reduced Spacing & Font Size) */}
+        <div className="hidden lg:flex items-center space-x-6 text-lg">
+          <NavLink to="/" active={location.pathname === "/"} isDark={isDark}>
+            Home
+          </NavLink>
+          <NavLink
+            to="/services"
+            active={location.pathname === "/services"}
+            isDark={isDark}
           >
-            {isMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
-          </button>
+            Services
+          </NavLink>
+          <NavLink
+            to="/pricing"
+            active={location.pathname === "/pricing"}
+            isDark={isDark}
+          >
+            Pricing
+          </NavLink>
+          <NavLink
+            to="/about"
+            active={location.pathname === "/about"}
+            isDark={isDark}
+          >
+            About
+          </NavLink>
+          <NavLink
+            to="/contact"
+            active={location.pathname === "/contact"}
+            isDark={isDark}
+          >
+            Contact
+          </NavLink>
+        </div>
 
-          <div
-            className={`
-            lg:flex items-center gap-8
-            fixed lg:static
-            inset-x-0 top-20 lg:top-0
-            p-6 lg:p-0
-            bg-[#2B428C] lg:bg-transparent
-            border-t lg:border-0 border-white/10
-            transition-all duration-300
-            ${isMenuOpen ? "flex flex-col" : "hidden"}
-          `}
+        {/* Right Side Controls (Theme Toggle + Login Button) */}
+        <div className="flex items-center space-x-3">
+          {/* Theme Toggle Button (Smaller & Compact) */}
+          <Button
+            onClick={toggleTheme}
+            variant="ghost"
+            className="w-8 h-8 p-1 rounded-full shadow-md text-black bg-white flex items-center justify-center"
           >
-            <NavLink to="/" active={location.pathname === "/"}>
-              Home
-            </NavLink>
-            <NavLink to="/services" active={location.pathname === "/services"}>
-              Services
-            </NavLink>
-            <NavLink to="/pricing" active={location.pathname === "/pricing"}>
-              Pricing
-            </NavLink>
-            <NavLink to="/about" active={location.pathname === "/about"}>
-              About
-            </NavLink>
-            <NavLink to="/contact" active={location.pathname === "/contact"}>
-              Contact
-            </NavLink>
-            <Button className="bg-[#47C263] hover:bg-[#47C263]/90 text-white w-full lg:w-auto">
-              Login
-            </Button>
-          </div>
+            {isDark ? <Sun size={16} /> : <Moon size={16} />}
+          </Button>
+
+          {/* Login Button (Compact Size) */}
+          <Button
+            className={`px-4 py-2 text-lg font-medium ${
+              isDark
+                ? "bg-blue-600 hover:bg-blue-700"
+                : "bg-[#47C263] hover:bg-[#47C263]/90"
+            } text-white`}
+          >
+            Login
+          </Button>
         </div>
       </div>
     </nav>
   );
 }
 
-function NavLink({ to, active, children }) {
+function NavLink({ to, active, children, isDark }) {
   return (
     <Link
       to={to}
-      className={`
-        text-white/90 hover:text-white
-        py-3 lg:py-0
-        border-b lg:border-b-0 border-white/10
-        last-of-type:border-b-0
-        transition-colors
-        w-full lg:w-auto
-        text-center
-        ${active ? "text-white font-medium" : ""}
-      `}
+      className={`${
+        isDark
+          ? "text-white hover:text-gray-300"
+          : "text-white hover:text-gray-200"
+      } transition-colors ${active ? "font-semibold" : "font-normal"}`}
     >
       {children}
     </Link>

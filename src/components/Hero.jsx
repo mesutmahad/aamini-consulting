@@ -1,8 +1,17 @@
+"use client";
+
 import { Button } from "../components/ui/button";
+import { useTheme } from "../contexts/ThemeContext";
 
 export default function Hero() {
+  const { isDark } = useTheme();
+
   return (
-    <div className="relative min-h-[calc(100vh-5rem)] flex items-center bg-[#2B428C] pt-20">
+    <div
+      className={`relative min-h-[calc(100vh-5rem)] flex items-center ${
+        isDark ? "bg-gray-900" : "bg-[#2B428C]"
+      } pt-20`}
+    >
       <div className="container mx-auto px-4 py-12 md:py-16 lg:py-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Text Content - Stays on the Left */}
@@ -18,14 +27,22 @@ export default function Hero() {
             <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
               <Button
                 size="lg"
-                className="bg-[#47C263] hover:bg-[#47C263]/90 text-white px-8 py-6 text-lg"
+                className={`${
+                  isDark
+                    ? "bg-green-600 hover:bg-green-700"
+                    : "bg-[#47C263] hover:bg-[#47C263]/90"
+                } text-white px-8 py-6 text-lg`}
               >
                 Contact Us
               </Button>
               <Button
                 size="lg"
-                to="/pricing"
-                className="text-[#2B428C] shadow-md bg-white hover:bg-[#2B428C] hover:text-white px-8 py-6 text-lg"
+                variant={isDark ? "outline" : "secondary"}
+                className={`${
+                  isDark
+                    ? "text-white border-white hover:bg-gray-800"
+                    : "text-[#2B428C] bg-white hover:bg-gray-100"
+                } shadow-md px-8 py-6 text-lg`}
               >
                 Pricing
               </Button>
