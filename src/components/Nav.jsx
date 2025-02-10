@@ -1,16 +1,19 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "../contexts/ThemeContext";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Nav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const { isDark, toggleTheme } = useTheme();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,7 +24,13 @@ export default function Nav() {
   }, []);
 
   const getNavBackground = () => {
-    return isDark ? "bg-gray-900" : "bg-[#2B428C]";
+    return isDark ? "bg-gray-900 text-white" : "bg-[#2B428C] text-black";
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/src/pages/HomePage.jsx");
+    setIsMenuOpen(false);
   };
 
   return (
@@ -30,78 +39,120 @@ export default function Nav() {
         isScrolled ? "backdrop-blur-sm shadow-lg" : ""
       }`}
     >
-      <div className="container mx-auto px-4 relative flex items-center justify-between h-20">
+      <div className="container mx-auto px-4 flex items-center justify-between h-20">
         {/* Logo */}
-        <Link to="/src/App.jsx" className="flex items-center">
+        <Link to="/" className="flex items-center">
           <img
             src={
               isDark
                 ? "/assets/Amini Consultation Logo white-01.png"
-                : "/assets/Amini Consultation Logo-02.png"
+                : "/assets/Amini Consultation Logo white-01.png"
             }
             alt="Company Logo"
-            className="h-20 w-auto" // Decreased size
+            className="h-20 w-auto"
           />
         </Link>
 
-        {/* Navigation Links (Reduced Spacing & Font Size) */}
-        <div className="hidden lg:flex items-center space-x-6 text-lg">
-          <NavLink to="/" active={location.pathname === "/"} isDark={isDark}>
-            Home
-          </NavLink>
-          <NavLink
-            to="/services"
-            active={location.pathname === "/services"}
-            isDark={isDark}
-          >
-            Services
-          </NavLink>
-          <NavLink
-            to="/pricing"
-            active={location.pathname === "/pricing"}
-            isDark={isDark}
-          >
-            Pricing
-          </NavLink>
-          <NavLink
-            to="/about"
-            active={location.pathname === "/about"}
-            isDark={isDark}
-          >
-            About
-          </NavLink>
-          <NavLink
-            to="/contact"
-            active={location.pathname === "/contact"}
-            isDark={isDark}
-          >
-            Contact
-          </NavLink>
-        </div>
+        {/* Right Side Controls (Nav Links, Theme Toggle, Login/Logout) */}
+        <div className="ml-auto flex items-center space-x-6">
+          {/* Nav Links (Hidden on Mobile) */}
+          <div className="hidden lg:flex space-x-6">
+            {["/", "/services", "/pricing", "/about", "/contact"].map(
+              (path, index) => (
+                <NavLink
+                  key={index}
+                  to={path}
+                  active={location.pathname === path}
+                  isDark={isDark}
+                >
+                  {path === "/"
+                    ? "Home"
+                    : path.replace("/", "").charAt(0).toUpperCase() +
+                      path.slice(2)}
+                </NavLink>
+              )
+            )}
+          </div>
 
-        {/* Right Side Controls (Theme Toggle + Login Button) */}
-        <div className="flex items-center space-x-3">
-          {/* Theme Toggle Button (Smaller & Compact) */}
+          {/* Theme Toggle Button */}
           <Button
             onClick={toggleTheme}
             variant="ghost"
-            className="w-8 h-8 p-1 rounded-full shadow-md text-black bg-white flex items-center justify-center"
+            className={`w-8 h-8 p-1 rounded-full shadow-md flex items-center justify-center 
+    ${isDark ? "text-white bg-gray-800" : "text-gray-900 bg-white"}`}
           >
             {isDark ? <Sun size={16} /> : <Moon size={16} />}
           </Button>
 
-          {/* Login Button (Compact Size) */}
-          <Button
-            className={`px-4 py-2 text-lg font-medium ${
-              isDark
-                ? "bg-blue-600 hover:bg-blue-700"
-                : "bg-[#47C263] hover:bg-[#47C263]/90"
-            } text-white`}
+          {/* Login/Logout Button */}
+          {user ? (
+            <Button
+              onClick={handleLogout}
+              className="hidden lg:block bg-red-500 text-white hover:bg-red-600 transition-colors px-4 py-2 rounded-lg"
+            >
+              Logout
+            </Button>
+          ) : (
+            <Link to="/login" className="hidden lg:block">
+              <Button className="bg-green-500 text-white hover:bg-green-600 transition-colors px-4 py-2 rounded-lg">
+                Login
+              </Button>
+            </Link>
+          )}
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="lg:hidden text-white p-2"
           >
-            Login
-          </Button>
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
       </div>
+
+      {/* Mobile Menu (Positioned to Right Corner) */}
+      {isMenuOpen && (
+        <div
+          className={`lg:hidden absolute top-full right-0 w-56 p-4 shadow-lg border rounded-lg z-50 ${
+            isDark ? "bg-gray-900 text-white" : "bg-white text-black"
+          }`}
+        >
+          {["/", "/services", "/pricing", "/about", "/contact"].map(
+            (path, index) => (
+              <Link
+                key={index}
+                to={path}
+                className="block hover:text-gray-200 py-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {path === "/"
+                  ? "Home"
+                  : path.replace("/", "").charAt(0).toUpperCase() +
+                    path.slice(2)}
+              </Link>
+            )
+          )}
+          <div className="border-t mt-2 pt-2">
+            {user ? (
+              <Button
+                onClick={handleLogout}
+                className="w-full bg-red-500 hover:bg-red-600"
+              >
+                Logout
+              </Button>
+            ) : (
+              <Link to="/login">
+                <Button
+                  className="w-full bg-blue-500 hover:bg-blue-600"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Login
+                </Button>
+              </Link>
+            )}
+          </div>
+        </div>
+      )}
     </nav>
   );
 }

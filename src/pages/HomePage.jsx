@@ -11,11 +11,11 @@ export default function HomePage() {
    }, []);
   return (
     <>
+      
       <Nav />
       <Hero />
       <Services />
-      <Pricing />
-      <Footer />
+     
 
     </>
   );

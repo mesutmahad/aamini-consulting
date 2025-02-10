@@ -2,6 +2,7 @@
 
 import { User, Building2, Users, Activity, Clock, Shield } from "lucide-react";
 import Pricing from "./pricing";
+import WhyChooseUs from "../components/why-choose-us";
 import { useEffect } from "react";
 import { useTheme } from "../contexts/ThemeContext";
 
@@ -88,6 +89,7 @@ export default function Services() {
             </div>
           </div>
         </section>
+        <WhyChooseUs />
 
         {/* Trust Section */}
         <section className="py-16">
@@ -256,6 +258,7 @@ export default function Services() {
           </div>
         </section>
       </div>
+      
       <Pricing />
     </div>
   );
