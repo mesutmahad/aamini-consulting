@@ -42,7 +42,7 @@ function AppContent() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/*" element={<AdminDashboard />} />
       </Routes>
       {!hideFooter && <Footer />}
     </div>
