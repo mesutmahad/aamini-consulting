@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
         nationality: "Somali",
         phone: "+252 617678646",
         email: "mesutmahad@gmail.com",
-        profilePicture: "/img/PROFILE PIC.ico",
+        profilePicture: null,
         address: "Jawhara st, Mogadishu, Somalia",
       };
       setUser(userData);
@@ -39,18 +39,6 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("rememberedUser");
   };
 
-  const addUser = (newUserData) => {
-    // In a real app, you'd send this data to your backend to create a new user
-    // For this example, we'll just add it to local storage
-    const newUser = {
-      ...newUserData,
-      id: Date.now(), // Generate a unique ID (use a proper ID generation in production)
-    };
-    setUser(newUser);
-    localStorage.setItem("rememberedUser", JSON.stringify(newUser));
-    return true;
-  };
-
   const updateUser = (updatedUserData) => {
     const updatedUser = { ...user, ...updatedUserData };
     setUser(updatedUser);
@@ -58,7 +46,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, addUser, updateUser }}>
+    <AuthContext.Provider value={{ user, login, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

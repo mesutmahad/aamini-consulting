@@ -15,12 +15,16 @@ import HomePage from "./pages/HomePage";
 import WhyChooseUs from "./components/why-choose-us";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import LoginPage from "./pages/LoginPage";
-import { AuthProvider } from "./contexts/AuthContext";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import AdminDashboard from "./pages/AdminDashboard";
 
 function AppContent() {
   const location = useLocation();
-  const hideFooter = ["/login", "/admin"].includes(location.pathname);
+  const { user } = useAuth();
+
+  // Updated condition to hide footer
+  const hideFooter =
+    location.pathname === "/login" || location.pathname.startsWith("/admin");
 
   return (
     <div className="bg-[#f9f9f9] dark:bg-gray-900 transition-colors duration-200">
