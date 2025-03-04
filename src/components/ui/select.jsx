@@ -1,5 +1,3 @@
-"use client"
-
 import * as React from "react"
 import * as SelectPrimitive from "@radix-ui/react-select"
 import { Check, ChevronDown } from "lucide-react"
@@ -16,7 +14,7 @@ const SelectTrigger = React.forwardRef(({ className, children, ...props }, ref) 
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      "flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+      "flex h-10 w-full items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
       className,
     )}
     {...props}
@@ -56,6 +54,11 @@ const SelectContent = React.forwardRef(({ className, children, position = "poppe
 ))
 SelectContent.displayName = SelectPrimitive.Content.displayName
 
+const SelectLabel = React.forwardRef(({ className, ...props }, ref) => (
+  <SelectPrimitive.Label ref={ref} className={cn("py-1.5 pl-8 pr-2 text-sm font-semibold", className)} {...props} />
+))
+SelectLabel.displayName = SelectPrimitive.Label.displayName
+
 const SelectItem = React.forwardRef(({ className, children, ...props }, ref) => (
   <SelectPrimitive.Item
     ref={ref}
@@ -81,5 +84,5 @@ const SelectSeparator = React.forwardRef(({ className, ...props }, ref) => (
 ))
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName
 
-export { Select, SelectGroup, SelectValue, SelectTrigger, SelectContent, SelectItem, SelectSeparator }
+export { Select, SelectGroup, SelectValue, SelectTrigger, SelectContent, SelectLabel, SelectItem, SelectSeparator }
 

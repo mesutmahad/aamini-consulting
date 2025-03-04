@@ -7,6 +7,8 @@ import { useTheme } from "../contexts/ThemeContext";
 import Sidebar from "../components/Sidebar";
 import Dashboard from "../components/Dashboard";
 import EditProfile from "../components/EditProfile";
+import CreateUser from "../components/CreateUser";
+import ListUsers from "../components/ListUsers";
 import { Menu } from "lucide-react";
 import { Button } from "../components/ui/button";
 
@@ -17,7 +19,6 @@ export default function AdminDashboard() {
   const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
 
-  // Check if we're on mobile and close sidebar by default
   useEffect(() => {
     const checkIfMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -28,13 +29,8 @@ export default function AdminDashboard() {
       }
     };
 
-    // Initial check
     checkIfMobile();
-
-    // Add event listener
     window.addEventListener("resize", checkIfMobile);
-
-    // Cleanup
     return () => window.removeEventListener("resize", checkIfMobile);
   }, []);
 
@@ -55,7 +51,6 @@ export default function AdminDashboard() {
         <h1 className="text-xl font-semibold">Admin Dashboard</h1>
       </div>
 
-      {/* Floating mobile menu button */}
       <button
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         className={`md:hidden fixed bottom-6 right-6 z-50 flex items-center justify-center w-12 h-12 rounded-full shadow-lg transition-colors ${
@@ -80,6 +75,8 @@ export default function AdminDashboard() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/profile" element={<EditProfile />} />
+            <Route path="/users/create" element={<CreateUser />} />
+            <Route path="/users/list" element={<ListUsers />} />
           </Routes>
         </main>
       </div>

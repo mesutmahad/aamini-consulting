@@ -33,7 +33,7 @@ export default function Nav() {
         isScrolled ? "backdrop-blur-sm shadow-lg" : ""
       }`}
     >
-      <div className="container mx-auto px-4 flex items-center justify-between h-20">
+      <div className="container mx-auto mr-10 px-4 flex items-center justify-between h-20">
         {/* Logo */}
         <Link to="/" className="flex items-center">
           <img

@@ -17,6 +17,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import LoginPage from "./pages/LoginPage";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import AdminDashboard from "./pages/AdminDashboard";
+import { Toaster } from "./components/ui/use-toast";
 
 function AppContent() {
   const location = useLocation();
@@ -49,6 +50,7 @@ function AppContent() {
         <Route path="/admin/*" element={<AdminDashboard />} />
       </Routes>
       {!hideFooter && <Footer />}
+      <Toaster />
     </div>
   );
 }
