@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "../components/ui/button";
-import { Menu, X, Sun, Moon, LogOut } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "../contexts/ThemeContext";
 import { useAuth } from "../contexts/AuthContext";
 import UserProfileDropdown from "./UserProfileDropdown";
@@ -13,8 +13,7 @@ export default function Nav() {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const { isDark, toggleTheme } = useTheme();
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
+  const { user } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,12 +25,6 @@ export default function Nav() {
 
   const getNavBackground = () => {
     return isDark ? "bg-gray-900 text-white" : "bg-[#2B428C] text-black";
-  };
-
-  const handleLogout = () => {
-    logout();
-    navigate("/src/pages/HomePage.jsx");
-    setIsMenuOpen(false);
   };
 
   return (
@@ -54,7 +47,7 @@ export default function Nav() {
           />
         </Link>
 
-        {/* Right Side Controls (Nav Links, Theme Toggle, Profile, Logout) */}
+        {/* Right Side Controls (Nav Links, Theme Toggle, Profile) */}
         <div className="ml-auto flex items-center space-x-4">
           {/* Nav Links (Hidden on Mobile and when in Admin routes) */}
           {!user && (
@@ -79,7 +72,7 @@ export default function Nav() {
 
           {user ? (
             <>
-              {/* 1. Theme Toggle Button */}
+              {/* Theme Toggle Button */}
               <Button
                 onClick={toggleTheme}
                 variant="ghost"
@@ -89,21 +82,13 @@ export default function Nav() {
                 {isDark ? <Sun size={16} /> : <Moon size={16} />}
               </Button>
 
-              {/* 2. Profile Icon (UserProfileDropdown) */}
+              {/* Profile Icon (UserProfileDropdown) */}
               <UserProfileDropdown />
 
-              {/* 3. User's Name */}
+              {/* User's Name */}
               <span className="hidden lg:inline-block text-white font-medium">
                 {user.fullName || user.username}
               </span>
-              {/* 4. Logout Button */}
-              <Button
-                onClick={handleLogout}
-                variant="ghost"
-                className="text-white text-white bg-red-500 transition-colors"
-              >
-                <LogOut size={20} />
-              </Button>
             </>
           ) : (
             <>
@@ -189,59 +174,27 @@ export default function Nav() {
                 </svg>
                 Edit Profile
               </Link>
-              {location.pathname.startsWith("/admin") ? (
-                <Link
-                  to="/admin"
-                  className="block hover:text-gray-200 py-2 flex items-center"
-                  onClick={() => setIsMenuOpen(false)}
+              <Link
+                to="/admin"
+                className="block hover:text-gray-200 py-2 flex items-center"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 mr-2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 mr-2"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                    />
-                  </svg>
-                  Dashboard
-                </Link>
-              ) : (
-                <Link
-                  to="/admin"
-                  className="block hover:text-gray-200 py-2 flex items-center"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 mr-2"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                    />
-                  </svg>
-                  Admin Dashboard
-                </Link>
-              )}
-              <div className="border-t mt-2 pt-2">
-                <Button
-                  onClick={handleLogout}
-                  className="w-full bg-red-500 hover:bg-red-600"
-                >
-                  Logout
-                </Button>
-              </div>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                  />
+                </svg>
+                Dashboard
+              </Link>
             </>
           ) : (
             <>

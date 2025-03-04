@@ -50,17 +50,19 @@ const EditProfile = () => {
 
   return (
     <div
-      className={`container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl py-10 mt-20 ${
+      className={`w-full mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl py-6 sm:py-10 mt-4 sm:mt-8 ${
         isDark
           ? "bg-gray-800 text-white border border-gray-700 shadow-lg"
           : "bg-white text-gray-900 border border-gray-200 shadow-md"
       } rounded-lg transition-all duration-200`}
     >
-      <h1 className="text-3xl font-semibold mb-8 text-center">Edit Profile</h1>
+      <h1 className="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 text-center">
+        Edit Profile
+      </h1>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="flex flex-col items-center mb-6">
           <div
-            className={`w-32 h-32 rounded-full flex items-center justify-center overflow-hidden mb-4 ${
+            className={`w-24 h-24 sm:w-32 sm:h-32 rounded-full flex items-center justify-center overflow-hidden mb-4 ${
               isDark ? "bg-gray-700" : "bg-gray-200"
             }`}
           >
@@ -71,7 +73,7 @@ const EditProfile = () => {
                 className="w-full h-full object-cover"
               />
             ) : (
-              <span className="text-4xl font-semibold text-gray-400">
+              <span className="text-3xl sm:text-4xl font-semibold text-gray-400">
                 {name.charAt(0) || user?.username?.charAt(0) || "U"}
               </span>
             )}
@@ -87,7 +89,7 @@ const EditProfile = () => {
             type="button"
             variant="outline"
             onClick={() => fileInputRef.current.click()}
-            className={`mt-2 ${
+            className={`mt-2 text-sm sm:text-base ${
               isDark
                 ? "bg-gray-700 hover:bg-gray-600"
                 : "bg-gray-100 hover:bg-gray-200"
@@ -97,41 +99,43 @@ const EditProfile = () => {
           </Button>
         </div>
         <div className="space-y-4">
-          <div>
-            <Label
-              htmlFor="name"
-              className={isDark ? "text-gray-300" : "text-gray-700"}
-            >
-              Name
-            </Label>
-            <Input
-              id="name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              className={
-                isDark ? "bg-gray-700 text-white" : "bg-white text-gray-900"
-              }
-            />
-          </div>
-          <div>
-            <Label
-              htmlFor="email"
-              className={isDark ? "text-gray-300" : "text-gray-700"}
-            >
-              Email
-            </Label>
-            <Input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className={
-                isDark ? "bg-gray-700 text-white" : "bg-white text-gray-900"
-              }
-            />
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <Label
+                htmlFor="name"
+                className={isDark ? "text-gray-300" : "text-gray-700"}
+              >
+                Name
+              </Label>
+              <Input
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                className={
+                  isDark ? "bg-gray-700 text-white" : "bg-white text-gray-900"
+                }
+              />
+            </div>
+            <div>
+              <Label
+                htmlFor="email"
+                className={isDark ? "text-gray-300" : "text-gray-700"}
+              >
+                Email
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className={
+                  isDark ? "bg-gray-700 text-white" : "bg-white text-gray-900"
+                }
+              />
+            </div>
           </div>
           <div>
             <Label
