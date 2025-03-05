@@ -1,5 +1,3 @@
-"use client";
-
 import { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
@@ -14,24 +12,36 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const login = (username, password) => {
-    // This is a simple check. In a real app, you'd validate against a backend.
-    if (username === "admin" && password === "2025") {
-      const userData = {
-        username: "admin",
-        fullName: "MESUT MAHAD MOHAMED",
-        gender: "Male",
-        nationality: "Somali",
-        phone: "+252 617678646",
-        email: "mesutmahad@gmail.com",
-        profilePicture: null,
-        address: "Jawhara st, Mogadishu, Somalia",
-      };
-      setUser(userData);
-      localStorage.setItem("rememberedUser", JSON.stringify(userData));
-      return true;
+  const login = async (email, password) => {
+    try {
+      const response = await fetch("http://localhost:3001/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        const userData = {
+          userId: data.data.userId,
+          name: data.data.name,
+          email: data.data.email,
+        };
+
+        setUser(userData);
+        localStorage.setItem("rememberedUser", JSON.stringify(userData));
+        return true;
+      } else {
+        console.error("Login failed:", data.message);
+        return false;
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+      return false;
     }
-    return false;
   };
 
   const logout = () => {
@@ -39,14 +49,8 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("rememberedUser");
   };
 
-  const updateUser = (updatedUserData) => {
-    const updatedUser = { ...user, ...updatedUserData };
-    setUser(updatedUser);
-    localStorage.setItem("rememberedUser", JSON.stringify(updatedUser));
-  };
-
   return (
-    <AuthContext.Provider value={{ user, login, logout, updateUser }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

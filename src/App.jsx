@@ -18,6 +18,8 @@ import LoginPage from "./pages/LoginPage";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import AdminDashboard from "./pages/AdminDashboard";
 import { Toaster } from "./components/ui/use-toast";
+import { ToastContainer } from "react-toastify"; // ✅ Import Toastify
+import "react-toastify/dist/ReactToastify.css"; // ✅ Import Toastify CSS
 
 function AppContent() {
   const location = useLocation();
@@ -50,7 +52,12 @@ function AppContent() {
         <Route path="/admin/*" element={<AdminDashboard />} />
       </Routes>
       {!hideFooter && <Footer />}
-      <Toaster />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar
+        closeOnClick
+      />{" "}
     </div>
   );
 }

@@ -31,12 +31,11 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
   const menuItems = [
     { icon: LayoutDashboard, label: "Dashboard", path: "/admin" },
-    { icon: UserCircle, label: "Profile", path: "/admin/profile" },
+    // { icon: UserCircle, label: "Profile", path: "/admin/profile" },
     {
       icon: Users,
       label: "Users",
       subItems: [
-       
         { icon: List, label: "List Users", path: "/admin/users/list" },
       ],
     },
@@ -125,8 +124,6 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
             )
           )}
         </div>
-
-      
       </div>
     </>
   );

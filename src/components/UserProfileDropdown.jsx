@@ -54,9 +54,9 @@ const UserProfileDropdown = () => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link to="/admin/profile" className="w-full flex items-center">
+          <Link to="/admin/users/list" className="w-full flex items-center">
             <User className="mr-2 h-4 w-4" />
-            <span>Profile</span>
+            <span>Users</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>

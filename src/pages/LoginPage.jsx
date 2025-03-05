@@ -11,19 +11,20 @@ import { useTheme } from "../contexts/ThemeContext";
 import { Sun, Moon } from "lucide-react";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { login } = useAuth();
   const { isDark, toggleTheme } = useTheme();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (login(username, password)) {
+    const success = await login(email, password);
+    if (success) {
       navigate("/admin");
     } else {
-      setError("Invalid username or password");
+      setError("Invalid email or password");
     }
   };
 
@@ -33,7 +34,6 @@ export default function LoginPage() {
         isDark ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"
       }`}
     >
-      {/* Theme Toggle Button */}
       <button
         onClick={toggleTheme}
         className={`absolute top-4 right-4 p-2 rounded-full ${
@@ -48,7 +48,6 @@ export default function LoginPage() {
           isDark ? "bg-gray-800" : "bg-gray-200"
         }`}
       >
-        {/* Centered Logo */}
         <div className="flex justify-center">
           <img
             src="/assets/Amini Consultation Logo white-01.png"
@@ -57,7 +56,6 @@ export default function LoginPage() {
           />
         </div>
 
-        {/* Heading */}
         <div className="text-center space-y-2">
           <h1 className="text-4xl font-bold tracking-tight">Welcome Back</h1>
           <p
@@ -67,7 +65,6 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
           {error && (
             <div className="text-sm text-red-500 bg-red-500/10 p-3 rounded-lg">
@@ -78,20 +75,20 @@ export default function LoginPage() {
           <div className="space-y-4">
             <div>
               <label
-                htmlFor="username"
+                htmlFor="email"
                 className={`block text-sm font-medium ${
                   isDark ? "text-gray-300" : "text-gray-700"
                 } mb-2`}
               >
-                Username
+                Email
               </label>
               <Input
-                id="username"
-                type="text"
+                id="email"
+                type="email"
                 required
-                placeholder="Enter your username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className={`${
                   isDark ? "bg-[#2C2C2C] text-white" : "bg-white text-gray-900"
                 } border-0 placeholder:text-gray-500 h-12`}
@@ -136,7 +133,6 @@ export default function LoginPage() {
           </Button>
         </form>
 
-        {/* Terms and Privacy */}
         <p
           className={`text-center text-sm ${
             isDark ? "text-gray-500" : "text-gray-600"
